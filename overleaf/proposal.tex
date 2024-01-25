@@ -1,39 +1,85 @@
-\documentclass[11pt,a4paper]{article}
-\usepackage{geometry}
-\usepackage{enumitem}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage{cite}
-\usepackage{hyperref}
+% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
+\pdfoutput=1
+% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
 
-\geometry{margin=1in}
-\linespread{1.2} % Set linespace
-\frenchspacing % No double spacing between sentences
+\documentclass[11pt]{article}
+
+% Remove the "review" option to generate the final version.
+\usepackage[final]{ACL2023}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+% For Vietnamese characters
+% \usepackage[T5]{fontenc}
+% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out.
+% However, it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary, and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+\usepackage{inconsolata}
 
 
-%-----------------------
-% Set pdf information and add title, fill in the fields
+% If the title and author information does not fit in the area allocated, uncomment the following
+%
+%\setlength\titlebox{<dim>}
+%
+% and set <dim> to something 5cm or larger.
 
-\title{Project Proposal}
-\author{Austin, Sebastian, }
-\date{}
+\title{Instructions for ACL 2023 Proceedings}
 
-%-----------------------
-% Begin document
-%-----------------------
+% Author information can be set in various styles:
+% For several authors from the same institution:
+\author{Austin T. Barton$^1$ \and Sebastian Jaskowski$^1$ \and Author A. Authour$^1$ \\
+        \\
+         $^1$Georgia Institute of Technology \\ 
+         \\ 
+         \texttt{abarton40@gatech.edu} \\ \texttt{email@domain} \\ \texttt{email2@domain}}
+% if the names do not fit well on one line use
+%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
+% For authors from different institutions:
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \And  ... \And
+%         Author n \\ Address line \\ ... \\ Address line}
+% To start a seperate ``row'' of authors use \AND, as in
+% \author{Author 1 \\ Address line \\  ... \\ Address line
+%         \AND
+%         Author 2 \\ Address line \\ ... \\ Address line \And
+%         Author 3 \\ Address line \\ ... \\ Address line}
+
 \begin{document}
-
 \maketitle
 
-\section{Summary}
+\section{Introduction}
+Here is an in text citation \cite{gu2022}.
 
-\section{Proposed Method}
+\section{Engines}
 
-\section{Related Work}
+\section{Document Body}
 
-\section{Datasets / Environments}
+\subsection{References}
 
+\section*{Limitations}
+
+\section*{Ethics Statement}
+
+\section*{Acknowledgements}
+
+% Entries for the entire Anthology, followed by custom entries
+\bibliography{ref_proposal}
+\bibliographystyle{acl_natbib}
+
+This is a section in the appendix.
 
 \end{document}
