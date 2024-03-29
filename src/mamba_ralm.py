@@ -7,7 +7,7 @@ from typing import Any
 class MambaRALM(RALM):
     '''RALM class dedicated to wrapping a Mamba architecture for RAG tasks'''
     def __init__(self, pretrained_prefix : str, vector_db : Any):
-        super().__init__(RALM, vector_db)
+        super().__init__(vector_db)
         self.lm = MambaLMHeadModel.from_pretrained(pretrained_prefix, device=device)
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_prefix)
 
