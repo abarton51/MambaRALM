@@ -1,0 +1,8 @@
+# torch # install separately using cuda
+# packaging
+# datasets
+# git+https://github.com/huggingface/transformers@main
+# git+https://github.com/openai/triton.git
+# causal-conv1d
+# mamba-ssm
+# numpy

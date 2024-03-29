@@ -1,7 +1,7 @@
-from ralm import RALM
+from src.ralm import RALM
 from transformers import AutoTokenizer
 from mamba_ssm.models.mixer_seq_simple import MambaLMHeadModel
-from config import device
+from src.config import device
 
 class MambaRALM(RALM):
     '''RALM class dedicated to wrapping a Mamba architecture for RAG tasks'''
