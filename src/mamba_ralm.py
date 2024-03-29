@@ -1,5 +1,5 @@
 from ralm import RALM
-from transformers import AutoTokenizer
+from transformers import AutoTokenizer, AutoModelForCausalLM
 from mamba_ssm.models.mixer_seq_simple import MambaLMHeadModel
 from src.config import device
 from typing import Any
@@ -8,7 +8,8 @@ class MambaRALM(RALM):
     '''RALM class dedicated to wrapping a Mamba architecture for RAG tasks'''
     def __init__(self, pretrained_prefix : str, vector_db : Any):
         super().__init__(vector_db)
-        self.lm = MambaLMHeadModel.from_pretrained(pretrained_prefix, device=device)
+        # self.lm = MambaLMHeadModel.from_pretrained(pretrained_prefix, device=device)
+        self.lm = AutoModelForCausalLM.from_pretrained(pretrained_prefix, device=device)
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_prefix)
 
     def format_output(self, output : list[str]) -> str:
