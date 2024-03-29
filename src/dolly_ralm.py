@@ -4,7 +4,7 @@ from typing import Any
 class DollyRALM(RALM):
     '''RALM class dedicated to wrapping a Transformer architecture (Dolly) for RAG tasks'''
     def __init__(self, pretrained_prefix : str, vector_db : Any):
-        super(RALM, self).__init__(vector_db)
+        super().__init__(RALM, vector_db)
         # TODO: Instantiate mamba model
         self.lm = None
 
