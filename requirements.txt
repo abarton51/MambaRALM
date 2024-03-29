@@ -3,6 +3,7 @@ datasets
 torch
 langchain
 langchain-community
+langchain-core
 transformers
 huggingface_hub
 qdrant-client
