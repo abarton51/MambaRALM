@@ -1,4 +1,4 @@
-from src.ralm import RALM
+from ralm import RALM
 from transformers import AutoTokenizer
 from mamba_ssm.models.mixer_seq_simple import MambaLMHeadModel
 from src.config import device
