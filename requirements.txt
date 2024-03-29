@@ -1,2 +1,11 @@
 numpy
 datasets
+torch
+langchain
+langchain-community
+transformers
+huggingface_hub
+qdrant-client
+causal-conv1d>=1.2.0
+mamba-ssm
+sentence-transformers
