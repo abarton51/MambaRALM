@@ -13,11 +13,9 @@ class MambaRALM(RALM):
         self.lm = AutoModelForCausalLM.from_pretrained(pretrained_prefix, device=device)
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_prefix)
 
-    @override
     def format_output(self, output : list[str]) -> str:
         return output[0].split("<|assistant|>\n")[1].split("<|endoftext|>\n")[0]
 
-    @override
     def predict(self, question : str, max_response_length : int = 150) -> str:
         prompt = self.generate_prompt(question)
         input_ids = self.tokenizer(prompt, return_tensors="pt")['input_ids'].to(device)
