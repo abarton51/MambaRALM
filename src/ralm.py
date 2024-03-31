@@ -29,7 +29,7 @@ class RALM:
 
             QUESTION: {question}
 
-            Given CONTEXT, respond to the QUESTION. If the selected CONTEXT is relevant and informative, provide a detailed answer based on its content. However, if the selected CONTEXT does not offer useful information or is not applicable, simply state 'No answer found'.
+            Given CONTEXT, respond to the QUESTION. If the selected CONTEXT is relevant and informative, provide a detailed answer to the QUESTION based on its content. However, if the selected CONTEXT does not offer useful information regarding the QUESTION or is not applicable to the QUESTION, simply state 'No answer found'.
 
         """)
 
