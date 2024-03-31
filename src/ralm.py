@@ -1,22 +1,25 @@
 from typing import Any
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from langchain_core.vectorstores import VectorStore
 from langchain.prompts import PromptTemplate
 
-class RALM(ABC):
+class RALM:
     '''Generic class wrapping retrieval augmented langauge models'''
 
-    def __init__(self, vector_db : VectorStore): 
+    def __init__(self, vector_db : VectorStore):
+        print(f"VectorDB: {vector_db}")
         self.vector_db = vector_db
+        self.provide_no_context = False
     
-    @classmethod
     def retrieve_context(self, question : str, k : int) -> list[str]:
         '''Retrieve the top-k most relevant context to the prompt'''
-        relevant_context_chunks = self.vector_db.similarity_search(question, k)
+        if self.provide_no_context is False: # Remove after we have context vectors
+            relevant_context_chunks = self.vector_db.similarity_search(question, k)
 
-        return [context_chunk.page_content for context_chunk in relevant_context_chunks]
+            return [context_chunk.page_content for context_chunk in relevant_context_chunks]
+        else:
+            return ["There is no context."]
         
-    @classmethod
     def generate_prompt(self, question : str, k : int = 4) -> str:
         '''Generates an LLM prompt (context, question, specifications), provided the question, utilizing k context chunks'''
         context = " , ".join(self.retrieve_context(question, k))
