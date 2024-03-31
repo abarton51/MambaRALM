@@ -22,4 +22,8 @@ class MambaRALM(RALM):
         input_ids = self.tokenizer(prompt, return_tensors="pt")['input_ids'].to(device)
         response = self.lm.generate(input_ids, max_length=(input_ids.shape[1] + max_response_length))
         output = self.tokenizer.batch_decode(response)
-        return self.format_output(output)
+        try:
+            return self.format_output(output)
+        except:
+            print("Error formatting output. Raw output string returned.")
+            return output

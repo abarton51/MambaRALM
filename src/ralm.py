@@ -10,11 +10,11 @@ class RALM:
         self.vector_db = vector_db
         self.provide_no_context = False
         self._prompt_template = """<|user|>
-            CONTEXT: {context}
+CONTEXT: {context}
 
-            QUESTION: {question}
+QUESTION: {question}
 
-            Respond to the QUESTION using only information from the CONTEXT. If the selected CONTEXT is relevant and informative, provide a detailed answer to the QUESTION based on its content without repeating the QUESTION. However, if the selected CONTEXT does not offer useful information regarding the QUESTION or is not applicable to the QUESTION, simply state 'No answer found'.
+Respond to the QUESTION using only information from the CONTEXT. If the selected CONTEXT is relevant and informative, provide a detailed answer to the QUESTION based on its content without repeating the QUESTION. However, if the selected CONTEXT does not offer useful information regarding the QUESTION or is not applicable to the QUESTION, simply state 'No answer found'.
         """
         self._no_context_string = "There is no context."
     
