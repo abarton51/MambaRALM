@@ -24,14 +24,13 @@ class RALM:
         '''Generates an LLM prompt (context, question, specifications), provided the question, utilizing k context chunks'''
         context = " , ".join(self.retrieve_context(question, k))
         
-        prompt = PromptTemplate.from_template("""
+        prompt = PromptTemplate.from_template("""<|user|> \{
             CONTEXT: {context}
 
             QUESTION: {question}
 
             Given CONTEXT, respond to the QUESTION. If the selected CONTEXT is relevant and informative, provide a detailed answer to the QUESTION based on its content. However, if the selected CONTEXT does not offer useful information regarding the QUESTION or is not applicable to the QUESTION, simply state 'No answer found'.
-
-        """)
+        \}""")
 
         return prompt.format(context=context, question=question)
 
