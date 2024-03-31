@@ -1,4 +1,4 @@
-from ralm import RALM
+from src.ralm import RALM
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from mamba_ssm.models.mixer_seq_simple import MambaLMHeadModel
 from langchain_core.vectorstores import VectorStore
@@ -10,10 +10,11 @@ class MambaRALM(RALM):
     def __init__(self, pretrained_prefix : str = "havenhq/mamba-chat", vector_db : VectorStore = None):
         super().__init__(vector_db)
         # self.lm = MambaLMHeadModel.from_pretrained(pretrained_prefix, device=device)
-        self.lm = AutoModelForCausalLM.from_pretrained(pretrained_prefix, device=device)
+        self.lm = AutoModelForCausalLM.from_pretrained(pretrained_prefix, trust_remote_code=True)
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_prefix)
 
     def format_output(self, output : list[str]) -> str:
+        print(f"Before formatting: {output}")
         return output[0].split("<|assistant|>\n")[1].split("<|endoftext|>\n")[0]
 
     def predict(self, question : str, max_response_length : int = 150) -> str:
