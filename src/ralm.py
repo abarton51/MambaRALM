@@ -8,13 +8,17 @@ class RALM(ABC):
 
     def __init__(self, vector_db : VectorStore): 
         self.vector_db = vector_db
+        self.provide_no_context = False
     
     @classmethod
     def retrieve_context(self, question : str, k : int) -> list[str]:
         '''Retrieve the top-k most relevant context to the prompt'''
-        relevant_context_chunks = self.vector_db.similarity_search(question, k)
+        if self.provide_no_context is False: # Remove after we have context vectors
+            relevant_context_chunks = self.vector_db.similarity_search(question, k)
 
-        return [context_chunk.page_content for context_chunk in relevant_context_chunks]
+            return [context_chunk.page_content for context_chunk in relevant_context_chunks]
+        else:
+            return ["There is no context."]
         
     @classmethod
     def generate_prompt(self, question : str, k : int = 4) -> str:
