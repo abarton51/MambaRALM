@@ -22,8 +22,8 @@ class RAGVectorStore:
     def create_text_splitter(self, chunk_size=1000, chunk_overlap=0):
         self.text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         
-    def split_text(self, docs: list[object]) -> list[object]:
-        self.documents_split = self.text_splitter.split_documents(docs)
+    def split_text(self):
+        self.documents_split = self.text_splitter.split_documents(self.docs)
     
     def get_db(self) -> object:
         if not self.loader or not self.docs or not self.text_splitter or not self.documents_split:
