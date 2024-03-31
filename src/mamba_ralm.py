@@ -10,7 +10,7 @@ class MambaRALM(RALM):
     '''RALM class dedicated to wrapping a Mamba architecture for RAG tasks'''
     def __init__(self, pretrained_prefix : str = "havenhq/mamba-chat", vector_db : VectorStore = None):
         super().__init__(vector_db)
-        self.lm = MambaLMHeadModel.from_pretrained(pretrained_prefix, device=device, dtype=torch.float32)
+        self.lm = MambaLMHeadModel.from_pretrained(pretrained_prefix, device=device, dtype=torch.float16)
         # self.lm = AutoModelForCausalLM.from_pretrained(pretrained_prefix, trust_remote_code=True).to(device) # Non-instruction tuned
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_prefix)
 
