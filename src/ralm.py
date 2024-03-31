@@ -27,7 +27,7 @@ class RALM:
         prompt = PromptTemplate.from_template("""
             <$BEGIN_CONTEXT> {context} <$END_CONTEXT>
 
-            <$BEGIN_QUESTION> {question} <$END_QUESTION>"
+            <$BEGIN_QUESTION> {question} <$END_QUESTION>
 
             Given CONTEXT between <$BEGIN_CONTEXT> and <$END_CONTEXT>, respond to the QUESTION between <$BEGIN_QUESTION> and <$END_QUESTION>. If the selected CONTEXT is relevant and informative, provide a detailed answer based on its content. However, if the selected CONTEXT does not offer useful information or is not applicable, simply state 'No answer found'.
 
