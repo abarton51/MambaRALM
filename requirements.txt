@@ -3,6 +3,7 @@ datasets
 torch
 langchain
 langchain-community
+langchain-text-splitters
 langchain-core
 transformers
 huggingface_hub
@@ -10,3 +11,4 @@ qdrant-client
 causal-conv1d>=1.2.0
 mamba-ssm
 sentence-transformers
+!pip install faiss-cpu
