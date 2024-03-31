@@ -7,7 +7,6 @@ class RALM:
     '''Generic class wrapping retrieval augmented langauge models'''
 
     def __init__(self, vector_db : VectorStore):
-        print(f"VectorDB: {vector_db}")
         self.vector_db = vector_db
         self.provide_no_context = False
     
@@ -31,7 +30,6 @@ class RALM:
 
             Given CONTEXT, respond to the QUESTION. If the selected CONTEXT is relevant and informative, provide a detailed answer to the QUESTION based on its content. However, if the selected CONTEXT does not offer useful information regarding the QUESTION or is not applicable to the QUESTION, simply state 'No answer found'.
         """)
-        print(prompt)
 
         return prompt.format(context=context, question=question)
 

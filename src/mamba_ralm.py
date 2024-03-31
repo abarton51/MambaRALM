@@ -15,7 +15,6 @@ class MambaRALM(RALM):
         self.tokenizer = AutoTokenizer.from_pretrained(pretrained_prefix)
 
     def format_output(self, output : list[str]) -> str:
-        print(f"Unformatted: {output}")
         return output[0].split("<|assistant|>\n")[1].split("<|endoftext|>\n")[0]
 
     def predict(self, question : str, max_response_length : int = 150) -> str:
