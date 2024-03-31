@@ -25,11 +25,11 @@ class RALM:
         context = " , ".join(self.retrieve_context(question, k))
         
         prompt = PromptTemplate.from_template("""
-            <$BEGIN_CONTEXT> {context} <$END_CONTEXT>
+            CONTEXT: {context}
 
-            <$BEGIN_QUESTION> {question} <$END_QUESTION>
+            QUESTION: {question}
 
-            Given CONTEXT between <$BEGIN_CONTEXT> and <$END_CONTEXT>, respond to the QUESTION between <$BEGIN_QUESTION> and <$END_QUESTION>. If the selected CONTEXT is relevant and informative, provide a detailed answer based on its content. However, if the selected CONTEXT does not offer useful information or is not applicable, simply state 'No answer found'.
+            Given CONTEXT, respond to the QUESTION. If the selected CONTEXT is relevant and informative, provide a detailed answer to the QUESTION based on its content. However, if the selected CONTEXT does not offer useful information regarding the QUESTION or is not applicable to the QUESTION, simply state 'No answer found'.
 
         """)
 
