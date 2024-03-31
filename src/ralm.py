@@ -3,11 +3,11 @@ from abc import ABC, abstractmethod
 from langchain_core.vectorstores import VectorStore
 from langchain.prompts import PromptTemplate
 
-class RALM(ABC):
+class RALM:
     '''Generic class wrapping retrieval augmented langauge models'''
 
     def __init__(self, vector_db : VectorStore):
-        print(vector_db)
+        print(f"VectorDB: {vector_db}")
         self.vector_db = vector_db
         self.provide_no_context = False
     
