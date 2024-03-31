@@ -11,4 +11,4 @@ qdrant-client
 causal-conv1d>=1.2.0
 mamba-ssm
 sentence-transformers
-!pip install faiss-cpu
+faiss-cpu
