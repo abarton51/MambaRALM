@@ -11,7 +11,7 @@ class MambaRALM(RALM):
         super().__init__(vector_db)
         # self.lm = MambaLMHeadModel.from_pretrained(pretrained_prefix, device=device)
         self.lm = AutoModelForCausalLM.from_pretrained(pretrained_prefix, trust_remote_code=True).to(device)
-        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_prefix).to(device)
+        self.tokenizer = AutoTokenizer.from_pretrained(pretrained_prefix)
 
     def format_output(self, output : list[str]) -> str:
         print(f"Before formatting: {output}")
