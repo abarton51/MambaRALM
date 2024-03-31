@@ -6,11 +6,11 @@ from langchain.prompts import PromptTemplate
 class RALM(ABC):
     '''Generic class wrapping retrieval augmented langauge models'''
 
-    def __init__(self, vector_db : VectorStore): 
+    def __init__(self, vector_db : VectorStore):
+        print(vector_db)
         self.vector_db = vector_db
         self.provide_no_context = False
     
-    @classmethod
     def retrieve_context(self, question : str, k : int) -> list[str]:
         '''Retrieve the top-k most relevant context to the prompt'''
         if self.provide_no_context is False: # Remove after we have context vectors
@@ -20,7 +20,6 @@ class RALM(ABC):
         else:
             return ["There is no context."]
         
-    @classmethod
     def generate_prompt(self, question : str, k : int = 4) -> str:
         '''Generates an LLM prompt (context, question, specifications), provided the question, utilizing k context chunks'''
         context = " , ".join(self.retrieve_context(question, k))
