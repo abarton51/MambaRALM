@@ -28,7 +28,7 @@ class RALM:
 
             QUESTION: {question}
 
-            Given CONTEXT, respond to the QUESTION. If the selected CONTEXT is relevant and informative, provide a detailed answer to the QUESTION based on its content. However, if the selected CONTEXT does not offer useful information regarding the QUESTION or is not applicable to the QUESTION, simply state 'No answer found'.
+            Respond to the QUESTION using only information from the CONTEXT. If the selected CONTEXT is relevant and informative, provide a detailed answer to the QUESTION based on its content without repeating the QUESTION. However, if the selected CONTEXT does not offer useful information regarding the QUESTION or is not applicable to the QUESTION, simply state 'No answer found'.
         """)
 
         return prompt.format(context=context, question=question)
