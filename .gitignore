@@ -161,4 +161,5 @@ cython_debug/
 
 #other stuff
 test.ipynb
-data/
+data/*
+vector_stores/*

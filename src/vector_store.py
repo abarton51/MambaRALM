@@ -5,6 +5,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_core.vectorstores import VectorStore
 from langchain_community.document_loaders import DirectoryLoader
 from src.config import device
+from tqdm import tqdm
 
 class RAGVectorStore:
     '''Vector store Wrapper'''
@@ -49,12 +50,26 @@ class RAGVectorStore:
         if verbose:
         
             print("Documents Split")
+            print("Beginning Embeddings")
 
-        print("Beginning Embeddings")
-
+        db = None
+        
+        #begin embedding
         if self.store_type == "FAISS":
 
-            db = FAISS.from_documents(documents_split, self.embedding_model)
+            with tqdm(total=len(docs), desc="Ingesting documents") as pbar:
+
+                for d in documents_split:
+
+                    if db:
+
+                        db.add_documents([d])
+
+                    else:
+
+                        db = FAISS.from_documents([d], self.embedding_model)
+
+                    pbar.update(1)
 
         db.save_local("vector_stores/{fn}".format(fn=db_name))
         
