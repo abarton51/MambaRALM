@@ -2,6 +2,7 @@ from langchain.embeddings import HuggingFaceBgeEmbeddings
 from langchain_community.document_loaders import TextLoader
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.vectorstores import FAISS
+from langchain_core.vectorstores import VectorStore
 from langchain_community.document_loaders import DirectoryLoader
 from src.config import device
 
@@ -26,7 +27,7 @@ class RAGVectorStore:
             }
         )
         
-    def get_db(self, verbose : bool = False) -> object:
+    def create_db(self, db_name : str, verbose : bool = False) -> object:
 
         docs = [x[0] for x in self.loader.load()]
 
@@ -43,6 +44,19 @@ class RAGVectorStore:
         print("Beginning Embeddings")
 
         if self.store_type == "FAISS":
-            return FAISS.from_documents(documents_split, self.embedding_model)
+
+            db = FAISS.from_documents(documents_split, self.embedding_model)
+
+        db.save_local("vector_stores/{fn}".format(fn=db_name))
         
-        return None
+        return db
+
+    def save_db(self, vector_store : VectorStore, db_name : str) -> None:
+
+        vector_store.save_local("vector_stores/{fn}".format(fn=db_name))
+
+    def load_db(self, db_name : str) -> VectorStore:
+
+        if self.store_type == "FAISS":
+        
+            return FAISS.load_local("vector_stores/{fn}".format(fn=db_name), embeddings=self.embedding_model, allow_dangerous_deserialization=True)
