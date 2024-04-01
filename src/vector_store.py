@@ -7,7 +7,7 @@ from langchain_community.document_loaders import DirectoryLoader
 from src.config import device
 
 class RAGVectorStore:
-    '''Vector store Wrapper Class'''
+    '''Vector store Wrapper'''
     
     def __init__(self, data_dir: str, store_type="FAISS", chunk_size: int = 1000, chunk_overlap: int = 30):
 
