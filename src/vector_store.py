@@ -11,7 +11,6 @@ class RAGVectorStore:
     def __init__(self, data_dir: str, store_type="FAISS", chunk_size: int = 1000, chunk_overlap: int = 30):
 
         self.data_dir = data_dir
-        self.embeddings = embeddings
         self.store_type = store_type
 
         #document loader
