@@ -15,12 +15,13 @@ class RAGVectorStore:
         self.loader, self.docs, self.text_splitter, self.documents_split = None, None, None, None
 
         #document loader
-        self.loader = DirectoryLoader(self.data_dir, glob="**/*.txt", loader_cls=TextLoader, use_multithreading=True)
+        self.loader = DirectoryLoader(self.data_dir, glob="**/*.txt", loader_cls=TextLoader, use_multithreading=True, show_progress=True)
         
         #text splitter
         self.text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         
     def get_db(self) -> object:
+
         docs = self.loader.load()
         documents_split = self.text_splitter.split_documents(docs)
 
