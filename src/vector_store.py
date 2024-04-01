@@ -20,7 +20,7 @@ class RAGVectorStore:
         self.loader = DirectoryLoader(self.data_dir, glob="**/*.txt", loader_cls=TextLoader, use_multithreading=True, show_progress=True)
         
         #text splitter
-        self.text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        self.text_splitter = CharacterTextSplitter(separator="\n", chunk_size=chunk_size, chunk_overlap=chunk_overlap)
 
         self.embedding_model = HuggingFaceBgeEmbeddings(
             model_name="BAAI/bge-small-en-v1.5",
