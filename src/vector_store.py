@@ -7,28 +7,31 @@ from langchain_community.document_loaders import DirectoryLoader
 class RAGVectorStore:
     '''Vector store Wrapper Class'''
     
-    def __init__(self, data_dir: str, embeddings: object, store_type="FAISS"):
+    def __init__(self, data_dir: str, embeddings: object, store_type="FAISS", chunk_size: int = 1000, chunk_overlap: int = 30):
+
         self.data_dir = data_dir
         self.embeddings = embeddings
         self.store_type = store_type
         self.loader, self.docs, self.text_splitter, self.documents_split = None, None, None, None
-    
-    def create_loader(self, glob="**/*.txt", loader_cls=TextLoader):
-        self.loader = DirectoryLoader(self.data_dir, glob=glob, loader_cls=loader_cls)
+
+        #document loader
+        self.loader = DirectoryLoader(self.data_dir, glob="**/*.txt", loader_cls=TextLoader, use_multithreading=True)
         
-    def load_docs(self):
-        self.docs = self.loader.load()
-        
-    def create_text_splitter(self, chunk_size=1000, chunk_overlap=0):
+        #text splitter
         self.text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         
-    def split_text(self):
-        self.documents_split = self.text_splitter.split_documents(self.docs)
+    def load_docs(self):
+        
+        return self.loader.load()
+        
+    def split_text(self, docs):
+        
+        return self.text_splitter.split_documents(docs)
     
     def get_db(self) -> object:
-        if not self.loader or not self.docs or not self.text_splitter or not self.documents_split:
-            raise Exception("""loader, text_splitter, docs, or documents_split is None.
-                            Make sure to call methods for initializing these attributes before calling get_db.""")
+        
+        documents_split = self.split_text(self.load_docs())
+
         if self.store_type == "FAISS":
-            return FAISS.from_documents(self.documents_split, self.embeddings)
+            return FAISS.from_documents(documents_split, self.embeddings)
         return None
