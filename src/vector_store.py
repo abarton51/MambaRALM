@@ -37,7 +37,7 @@ class RAGVectorStore:
             object: The vector database.
         """
 
-        docs = self.loader.load()
+        docs = [x[0] for x in self.loader.load()]
 
         if verbose:
             
