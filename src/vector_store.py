@@ -49,7 +49,7 @@ class RAGVectorStore:
             print("Documents Loaded")
 
         #suppress warnings for this next part
-        warnings.filterwarnings("ignore", category=logging.warning)
+        warnings.filterwarnings("ignore")
 
         documents_split = self.text_splitter.split_documents(docs)
 
