@@ -28,7 +28,7 @@ class RAGVectorStore:
         
     def get_db(self, verbose : bool = False) -> object:
 
-        docs = self.loader.load()
+        docs = [x[0] for x in self.loader.load()]
 
         if verbose:
             
