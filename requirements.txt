@@ -11,4 +11,5 @@ qdrant-client
 causal-conv1d>=1.2.0
 mamba-ssm
 sentence-transformers
-faiss-cpu
+faiss-gpu
+tqdm
