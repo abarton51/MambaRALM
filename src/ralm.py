@@ -7,22 +7,30 @@ class RALM:
     '''Generic class wrapping retrieval augmented langauge models'''
 
     def __init__(self, vector_db : VectorStore):
+
         self.vector_db = vector_db
         self.provide_no_context = False
+
         self._prompt_template = """<|user|> <BEGIN_CONTEXT>{context}<END_CONTEXT><BEGIN_QUESTION>{question}<END_QUESTION>. Let CONTEXT be the text between <BEGIN_CONTEXT> and <END_CONTEXT>. Let QUESTION be the text between <BEGIN_QUESTION> and <END_QUESTION>. Respond to the QUESTION using only information from the CONTEXT. If the selected CONTEXT is relevant and informative, provide a detailed answer to the QUESTION based on its content without repeating the QUESTION. However, if the CONTEXT does not offer useful information regarding the QUESTION or is not applicable to the QUESTION, simply state 'No answer found'."""
+
         self._no_context_string = "There is no context."
     
     def retrieve_context(self, question : str, k : int) -> list[str]:
         '''Retrieve the top-k most relevant context to the prompt'''
+
         if self.provide_no_context is False: # Remove after we have context vectors
+
             relevant_context_chunks = self.vector_db.similarity_search(question, k)
 
             return [context_chunk.page_content for context_chunk in relevant_context_chunks]
+
         else:
+
             return [self._no_context_string]
         
     def generate_prompt(self, question : str, k : int = 4) -> str:
         '''Generates an LLM prompt (context, question, specifications), provided the question, utilizing k context chunks'''
+        
         context = " , ".join(self.retrieve_context(question, k))
         
         prompt = PromptTemplate.from_template(self._prompt_template)
