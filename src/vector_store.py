@@ -6,6 +6,7 @@ from langchain_core.vectorstores import VectorStore
 from langchain_community.document_loaders import DirectoryLoader
 from src.config import device
 from tqdm import tqdm
+import itertools
 
 class RAGVectorStore:
     '''Vector store Wrapper'''
@@ -39,7 +40,7 @@ class RAGVectorStore:
             object: The vector database.
         """
 
-        docs = [x[0] for x in self.loader.load()]
+        docs = list(itertools.chain.from_iterable(self.loader.load()))
 
         if verbose:
             
