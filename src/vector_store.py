@@ -20,18 +20,11 @@ class RAGVectorStore:
         #text splitter
         self.text_splitter = CharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         
-    def load_docs(self):
-        
-        return self.loader.load()
-        
-    def split_text(self, docs):
-        
-        return self.text_splitter.split_documents(docs)
-    
     def get_db(self) -> object:
-        
-        documents_split = self.split_text(self.load_docs())
+        docs = self.loader.load()
+        documents_split = self.text_splitter.split_documents(docs)
 
         if self.store_type == "FAISS":
             return FAISS.from_documents(documents_split, self.embeddings)
+        
         return None
