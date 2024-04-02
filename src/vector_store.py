@@ -4,7 +4,7 @@ from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_core.vectorstores import VectorStore
 from langchain_community.document_loaders import DirectoryLoader
-
+from langchain.schema import Document
 from src.config import device
 from tqdm import tqdm
 import itertools
@@ -102,5 +102,6 @@ class RAGVectorStore:
             file_path = "chunked_data" + time.strftime("%Y%m%d-%H%M%S")
         
         with open(file_path, 'w') as jsonl_file:
-        for doc in array:
-            jsonl_file.write(doc.json() + '\n')
+            for doc in array:
+                jsonl_file.write(doc.json() + '\n')
+                
