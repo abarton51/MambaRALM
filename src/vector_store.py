@@ -112,7 +112,7 @@ class RAGVectorStore:
             for doc in documents_split:
                 jsonl_file.write(doc.json() + '\n')
     
-    def load_docs(self, file_path: str):
+    def load_docs(self, file_path: str = None) -> None:
         array = []
         with open(file_path, 'r') as jsonl_file:
             for line in jsonl_file:
