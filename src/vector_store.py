@@ -98,10 +98,16 @@ class RAGVectorStore:
         return None
 
     def chunk_and_save(self, array: Iterable[Document], file_path: str = None):
+        #suppress warnings for this next part
+        warnings.filterwarnings("ignore")
+
+        documents_split = self.text_splitter.split_documents(docs)
+        
         if not file_path:
             file_path = "chunked_data" + time.strftime("%Y%m%d-%H%M%S")
         
         with open(file_path, 'w') as jsonl_file:
             for doc in array:
                 jsonl_file.write(doc.json() + '\n')
-                
+    
+    def load_docs()
