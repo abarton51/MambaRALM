@@ -63,7 +63,7 @@ class RAGVectorStore:
         #begin embedding
         if self.store_type == "FAISS":
 
-            with tqdm(total=len(docs), desc="Ingesting documents") as pbar:
+            with tqdm(total=len(documents_split), desc="Ingesting documents") as pbar:
 
                 for d in documents_split:
 
