@@ -69,7 +69,7 @@ class RAGVectorStore:
 
             with tqdm(total=len(docs), desc="Ingesting documents") as pbar:
 
-                for d in self.documents_split:
+                for d in documents_split:
 
                     if db:
 
@@ -101,7 +101,7 @@ class RAGVectorStore:
         
         return list(itertools.chain.from_iterable(self.loader.load()))
 
-    def chunk_to_json(self, json_path: str = None) -> None:
+    def chunk_to_jsonl(self, jsonl_path: str = None) -> None:
         
         docs = self.load_docs()
         
@@ -112,18 +112,18 @@ class RAGVectorStore:
         
         print("Documents Split")
         
-        if not json_path:
+        if not jsonl_path:
             json_path = "chunked_data" + time.strftime("%Y%m%d-%H%M%S")
         
         with open(json_path, 'w') as jsonl_file:
             for doc in documents_split:
                 jsonl_file.write(doc.json() + '\n')
     
-    def load_docs_from_json(self, json_path: str) -> None:
+    def load_docs_from_jsonl(self, jsonl_path: str) -> None:
         
         docs = []
         
-        with open(json_path, 'r') as jsonl_file:
+        with open(jsonl_path, 'r') as jsonl_file:
             for line in jsonl_file:
                 data = json.loads(line)
                 obj = Document(**data)
