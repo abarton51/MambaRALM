@@ -101,21 +101,12 @@ class RAGVectorStore:
         
         return list(itertools.chain.from_iterable(self.loader.load()))
 
-    def chunk_to_jsonl(self, jsonl_path: str = None) -> None:
+    def chunk_to_jsonl(self, chunks: list = None) -> None:
         """Chunk iterable of Documents and write to JSONL file.
 
         Args:
             jsonl_path (str, optional): JSONL file path. Defaults to None.
         """
-        
-        docs = self.load_docs()
-        
-        #suppress warnings for text splitting
-        warnings.filterwarnings("ignore")
-
-        documents_split = self.text_splitter.split_documents(docs)
-        
-        print("Documents Split")
         
         if not jsonl_path:
             jsonl_path = "chunked_data" + "_" + time.strftime("%Y%m%d-%H%M%S")
