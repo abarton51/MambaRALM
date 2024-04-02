@@ -4,6 +4,7 @@ from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_core.vectorstores import VectorStore
 from langchain_community.document_loaders import DirectoryLoader
+
 from src.config import device
 from tqdm import tqdm
 import itertools
@@ -11,7 +12,7 @@ import logging
 import warnings
 import time
 from typing import Iterable
-
+import json
 
 class RAGVectorStore:
     '''Vector store Wrapper'''
