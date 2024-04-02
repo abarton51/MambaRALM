@@ -57,6 +57,14 @@ class RAGVectorStore:
 
         documents_split = self.text_splitter.split_documents(docs)
 
+        try:
+
+            self.chunk_to_jsonl(chunks=document_split)
+
+        except:
+
+            print("Saving document chunks failed")
+
         if verbose:
         
             print("Documents Split")
