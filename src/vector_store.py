@@ -4,11 +4,15 @@ from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.vectorstores import FAISS
 from langchain_core.vectorstores import VectorStore
 from langchain_community.document_loaders import DirectoryLoader
+from langchain.schema import Document
 from src.config import device
 from tqdm import tqdm
 import itertools
 import logging
 import warnings
+import time
+from typing import Iterable
+import json
 
 class RAGVectorStore:
     '''Vector store Wrapper'''
@@ -92,4 +96,50 @@ class RAGVectorStore:
             return FAISS.load_local("vector_stores/{fn}".format(fn=db_name), embeddings=self.embedding_model, allow_dangerous_deserialization=True)
       
         return None
+    
+    def load_docs(self) -> None:
+        
+        return list(itertools.chain.from_iterable(self.loader.load()))
 
+    def chunk_to_jsonl(self, jsonl_path: str = None) -> None:
+        """Chunk iterable of Documents and write to JSONL file.
+
+        Args:
+            jsonl_path (str, optional): JSONL file path. Defaults to None.
+        """
+        
+        docs = self.load_docs()
+        
+        #suppress warnings for text splitting
+        warnings.filterwarnings("ignore")
+
+        documents_split = self.text_splitter.split_documents(docs)
+        
+        print("Documents Split")
+        
+        if not jsonl_path:
+            jsonl_path = "chunked_data" + "_" + time.strftime("%Y%m%d-%H%M%S")
+        
+        with open(jsonl_path, 'w') as jsonl_file:
+            for doc in documents_split:
+                jsonl_file.write(doc.json() + '\n')
+    
+    def load_docs_from_jsonl(self, jsonl_path: str) -> None:
+        """Load Iterable of Documents from a JSONL file.
+
+        Args:
+            jsonl_path (str): JSONL file path.
+
+        Returns:
+            Iterable[Documents]: Iterable of Documents.
+        """
+        
+        docs = []
+        
+        with open(jsonl_path, 'r') as jsonl_file:
+            for line in jsonl_file:
+                data = json.loads(line)
+                obj = Document(**data)
+                docs.append(obj)
+                
+        return docs
