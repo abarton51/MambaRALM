@@ -57,6 +57,14 @@ class RAGVectorStore:
 
         documents_split = self.text_splitter.split_documents(docs)
 
+        try:
+
+            self.chunk_to_jsonl(chunks=document_split)
+
+        except:
+
+            print("Saving document chunks failed")
+
         if verbose:
         
             print("Documents Split")
@@ -67,7 +75,7 @@ class RAGVectorStore:
         #begin embedding
         if self.store_type == "FAISS":
 
-            with tqdm(total=len(docs), desc="Ingesting documents") as pbar:
+            with tqdm(total=len(documents_split), desc="Ingesting documents") as pbar:
 
                 for d in documents_split:
 
@@ -101,21 +109,12 @@ class RAGVectorStore:
         
         return list(itertools.chain.from_iterable(self.loader.load()))
 
-    def chunk_to_jsonl(self, jsonl_path: str = None) -> None:
+    def chunk_to_jsonl(self, chunks: list = None) -> None:
         """Chunk iterable of Documents and write to JSONL file.
 
         Args:
             jsonl_path (str, optional): JSONL file path. Defaults to None.
         """
-        
-        docs = self.load_docs()
-        
-        #suppress warnings for text splitting
-        warnings.filterwarnings("ignore")
-
-        documents_split = self.text_splitter.split_documents(docs)
-        
-        print("Documents Split")
         
         if not jsonl_path:
             jsonl_path = "chunked_data" + "_" + time.strftime("%Y%m%d-%H%M%S")
