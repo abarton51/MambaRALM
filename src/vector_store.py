@@ -113,7 +113,7 @@ class RAGVectorStore:
         print("Documents Split")
         
         if not jsonl_path:
-            jsonl_path = "chunked_data" + time.strftime("%Y%m%d-%H%M%S")
+            jsonl_path = "chunked_data" + "_" + time.strftime("%Y%m%d-%H%M%S")
         
         with open(jsonl_path, 'w') as jsonl_file:
             for doc in documents_split:
