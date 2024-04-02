@@ -97,11 +97,12 @@ class RAGVectorStore:
       
         return None
 
-    def chunk_and_save(self, array: Iterable[Document], file_path: str = None):
+    def chunk_and_save(self, docs: Iterable[Document], file_path: str = None):
         #suppress warnings for this next part
         warnings.filterwarnings("ignore")
 
         documents_split = self.text_splitter.split_documents(docs)
+        
         
         if not file_path:
             file_path = "chunked_data" + time.strftime("%Y%m%d-%H%M%S")
