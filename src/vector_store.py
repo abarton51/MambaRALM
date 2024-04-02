@@ -9,6 +9,7 @@ from tqdm import tqdm
 import itertools
 import logging
 import warnings
+import time
 
 class RAGVectorStore:
     '''Vector store Wrapper'''
@@ -65,7 +66,7 @@ class RAGVectorStore:
 
             with tqdm(total=len(docs), desc="Ingesting documents") as pbar:
 
-                for d in documents_split:
+                for d in self.documents_split:
 
                     if db:
 
@@ -93,3 +94,10 @@ class RAGVectorStore:
       
         return None
 
+    def chunk_and_save(self, file_path: str = None):
+        if not file_path:
+            file_path = "chunked_data" + time.strftime("%Y%m%d-%H%M%S")
+        
+        with open(file_path, 'w') as jsonl_file:
+        for doc in array:
+            jsonl_file.write(doc.json() + '\n')
