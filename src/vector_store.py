@@ -113,10 +113,13 @@ class RAGVectorStore:
                 jsonl_file.write(doc.json() + '\n')
     
     def load_docs(self, file_path: str = None) -> None:
-        array = []
+        
+        docs = []
+        
         with open(file_path, 'r') as jsonl_file:
             for line in jsonl_file:
                 data = json.loads(line)
                 obj = Document(**data)
-                array.append(obj)
-        return array
+                docs.append(obj)
+                
+        return docs
