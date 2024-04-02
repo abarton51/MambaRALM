@@ -102,6 +102,11 @@ class RAGVectorStore:
         return list(itertools.chain.from_iterable(self.loader.load()))
 
     def chunk_to_jsonl(self, jsonl_path: str = None) -> None:
+        """Chunk iterable of Documents and write to JSONL file.
+
+        Args:
+            jsonl_path (str, optional): JSONL file path. Defaults to None.
+        """
         
         docs = self.load_docs()
         
@@ -120,6 +125,14 @@ class RAGVectorStore:
                 jsonl_file.write(doc.json() + '\n')
     
     def load_docs_from_jsonl(self, jsonl_path: str) -> None:
+        """Load Iterable of Documents from a JSONL file.
+
+        Args:
+            jsonl_path (str): JSONL file path.
+
+        Returns:
+            Iterable[Documents]: Iterable of Documents.
+        """
         
         docs = []
         
