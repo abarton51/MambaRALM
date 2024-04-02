@@ -96,6 +96,9 @@ class RAGVectorStore:
             return FAISS.load_local("vector_stores/{fn}".format(fn=db_name), embeddings=self.embedding_model, allow_dangerous_deserialization=True)
       
         return None
+    
+    def load_docs(self, file_path: str) -> None:
+        return list(itertools.chain.from_iterable(self.loader.load()))
 
     def chunk_and_save(self, docs: Iterable[Document], file_path: str = None) -> None:
         #suppress warnings for text splitting
@@ -112,7 +115,7 @@ class RAGVectorStore:
             for doc in documents_split:
                 jsonl_file.write(doc.json() + '\n')
     
-    def load_docs(self, file_path: str = None) -> None:
+    def load_docs(self, file_path: str) -> None:
         
         docs = []
         
