@@ -10,6 +10,8 @@ import itertools
 import logging
 import warnings
 import time
+from typing import Iterable
+
 
 class RAGVectorStore:
     '''Vector store Wrapper'''
@@ -94,7 +96,7 @@ class RAGVectorStore:
       
         return None
 
-    def chunk_and_save(self, file_path: str = None):
+    def chunk_and_save(self, array: Iterable[Document], file_path: str = None):
         if not file_path:
             file_path = "chunked_data" + time.strftime("%Y%m%d-%H%M%S")
         
