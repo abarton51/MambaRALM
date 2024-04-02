@@ -98,9 +98,10 @@ class RAGVectorStore:
         return None
     
     def load_docs(self, file_path: str) -> None:
+        
         return list(itertools.chain.from_iterable(self.loader.load()))
 
-    def chunk_and_save(self, docs: Iterable[Document], file_path: str = None) -> None:
+    def chunk_to_json(self, docs: Iterable[Document], file_path: str = None) -> None:
         #suppress warnings for text splitting
         warnings.filterwarnings("ignore")
 
@@ -115,7 +116,7 @@ class RAGVectorStore:
             for doc in documents_split:
                 jsonl_file.write(doc.json() + '\n')
     
-    def load_docs(self, file_path: str) -> None:
+    def from_json_load_docs(self, file_path: str) -> None:
         
         docs = []
         
