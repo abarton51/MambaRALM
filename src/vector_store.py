@@ -120,7 +120,7 @@ class RAGVectorStore:
             jsonl_path = "chunked_data" + "_" + time.strftime("%Y%m%d-%H%M%S")
         
         with open(jsonl_path, 'w') as jsonl_file:
-            for doc in documents_split:
+            for doc in chunks:
                 jsonl_file.write(doc.json() + '\n')
     
     def load_docs_from_jsonl(self, jsonl_path: str) -> None:
