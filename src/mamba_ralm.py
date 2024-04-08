@@ -19,9 +19,9 @@ class MambaRALM(RALM):
 
         return output[0].split("<|assistant|>\n")[1].split("<|endoftext|>\n")[0]
 
-    def predict(self, question : str, max_response_length : int = 150) -> str:
+    def predict(self, question : str, k : int = 4, max_response_length : int = 150) -> str:
 
-        prompt = self.generate_prompt(question)
+        prompt = self.generate_prompt(question, k=k)
         input_ids = self.tokenizer(prompt, return_tensors="pt")['input_ids'].to(device)
         response = self.lm.generate(input_ids, max_length=(input_ids.shape[1] + max_response_length))
         output = self.tokenizer.batch_decode(response)
