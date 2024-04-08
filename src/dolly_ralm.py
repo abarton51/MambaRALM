@@ -17,9 +17,9 @@ class DollyRALM(RALM):
 
         return output[0]["generated_text"]
 
-    def predict(self, question : str) -> str:
+    def predict(self, question : str, k : int = 4) -> str:
 
-        prompt = self.generate_prompt(question)
+        prompt = self.generate_prompt(question, k=k)
         response = self.lm(prompt)
 
         try:
