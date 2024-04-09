@@ -18,8 +18,8 @@ class MambaRALM(RALM):
         self.ANSWER_START = "<|assistant|>\n"
         self.ANSWER_END = "<|endoftext|>"
 
-        self.tokenizer.eos_token = ANSWER_END
-        self.tokenizer.pad_token = tokenizer.eos_token
+        self.tokenizer.eos_token = self.ANSWER_END
+        self.tokenizer.pad_token = self.tokenizer.eos_token
         self.tokenizer.chat_template = AutoTokenizer.from_pretrained(
             "BAAI/bge-small-en-v1.5"
         ).chat_template
