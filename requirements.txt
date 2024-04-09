@@ -13,3 +13,4 @@ mamba-ssm
 sentence-transformers
 faiss-gpu
 tqdm
+accelerate
