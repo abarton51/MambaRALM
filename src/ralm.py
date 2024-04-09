@@ -33,7 +33,7 @@ class RALM:
 
         messages = []
 
-        if selected_prompt:
+        if context:
             messages.append({"role": "system", "content": "Please respond to the original query. If the selected document prompt is relevant and informative, provide a detailed answer based on its content. However, if the selected prompt does not offer useful information or is not applicable, simply state 'No answer found'."})
 
         messages.append(
