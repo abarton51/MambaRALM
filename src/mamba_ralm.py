@@ -26,7 +26,7 @@ class MambaRALM(RALM):
 
     def format_output(self, output : list[str]) -> str:
 
-        return output[0].split("<|assistant|>\n")[1].split("<|endoftext|>\n")[0]
+        return output.split("<|assistant|>\n")[1].split("<|endoftext|>")[0]
 
     def predict(self, question : str, k : int = 4, max_response_length : int = 150) -> str:
 
