@@ -83,7 +83,7 @@ def generate_and_evaluate_model(model_name=None, k=None, vector_db=None, eval_ds
 
     print(accuracy)
 
-    with open("{mn}_k{kv}_{dt}.txt".format(mn=model_name, kv=k, dt=), "w") as file:
+    with open("{mn}_k{kv}.txt".format(mn=model_name, kv=k), "w") as file:
 
         file.write(str(accuracy))
 
@@ -93,4 +93,16 @@ if __name__ == "__main__":
 
     eval_ds = get_evaluation_ds()
 
-    generate_and_evaluate_model(model_name="mamba", k=8, vector_db=db, eval_ds=eval_ds)
+    models = ["mamba", "dolly"]
+
+    for modeln in models:
+
+        for k in range(6, 15):
+
+            try:
+            
+                generate_and_evaluate_model(model_name=modeln, k=k, vector_db=db, eval_ds=eval_ds)
+            
+            except:
+
+                print("model generation failed on {modeln}, k={l}".format(modeln=modeln, k=k))
