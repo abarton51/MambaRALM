@@ -1,6 +1,4 @@
-% This must be in the first 5 lines to tell arXiv to use pdfLaTeX, which is strongly recommended.
 \pdfoutput=1
-% In particular, the hyperref package requires pdfLaTeX in order to break URLs across lines.
 
 \documentclass[11pt]{article}
 
@@ -13,9 +11,6 @@
 
 % For proper rendering and hyphenation of words containing Latin characters (including in bib files)
 \usepackage[T1]{fontenc}
-% For Vietnamese characters
-% \usepackage[T5]{fontenc}
-% See https://www.latex-project.org/help/documentation/encguide.pdf for other character sets
 
 % This assumes your files are encoded as UTF8
 \usepackage[utf8]{inputenc}
@@ -30,56 +25,65 @@
 % the typewriter font.
 \usepackage{inconsolata}
 
+% useful for filling with text
+\usepackage{lipsum}
 
-% If the title and author information does not fit in the area allocated, uncomment the following
-%
-%\setlength\titlebox{<dim>}
-%
-% and set <dim> to something 5cm or larger.
+% title should maybe be shortened but its good for now.
+% Analyzing RALMs with Selective State Space and Attention based Models for Long Sequence
+\title{Analyzing RALMs with Selective State Space and Attention based Architectures for Long Sequence Modeling: A Proposal}
 
-\title{Project Title: Proposal}
-
-% Author information can be set in various styles:
-% For several authors from the same institution:
-\author{Austin T. Barton$^1$ \and Sebastian Jaskowski$^1$ \and Author A. Authour$^1$ \\
+\author{Austin T. Barton$^1$ \and Sebastian P. Jaskowski$^1$ \and Nolan M. Bridges$^1$ \\
         \\
          $^1$Georgia Institute of Technology \\ 
          \\ 
-         \texttt{abarton40@gatech.edu} \\ \texttt{email@domain} \\ \texttt{email2@domain}}
-% if the names do not fit well on one line use
-%         Author 1 \\ {\bf Author 2} \\ ... \\ {\bf Author n} \\
-% For authors from different institutions:
-% \author{Author 1 \\ Address line \\  ... \\ Address line
-%         \And  ... \And
-%         Author n \\ Address line \\ ... \\ Address line}
-% To start a seperate ``row'' of authors use \AND, as in
-% \author{Author 1 \\ Address line \\  ... \\ Address line
-%         \AND
-%         Author 2 \\ Address line \\ ... \\ Address line \And
-%         Author 3 \\ Address line \\ ... \\ Address line}
+         \texttt{abarton40@gatech.edu} \\ \texttt{sjaskowski3@gatech.edu} \\ \texttt{bridges@gatech.edu}}
 
 \begin{document}
 \maketitle
 
 \section{Introduction}
-Here is an in text citation \cite{gu2022}.
+Retrieval-Augmented Language Models (RALMs) have achieved great success in question answering (QA) tasks, achieving state-of-the-art performance on many standard QA benchmarks. \cite{lewis2021retrievalaugmented, gao2024retrievalaugmented}. These models improve upon stand-alone language models by addressing limitations such as outdated knowledge, the generation of false or incorrect statements, and the lack of supportive reasoning for responses. 
 
+Most state-of-the-art RALMs are built on top of the Transformer architecture \cite{vaswani2023attention}. While this architecture has allowed for incredibly powerful language models due to its ability to selectively learn relationships between arbitrary elements in sequential data, it has also presented key challenges for RALM models. Notably, it features quadratic scaling over sequence length, resulting in limited context windows \cite{xu2024retrieval}, and it also struggles to effectively consider all information in its context window. \cite{liu2023lost}.
+
+Recently, a possible alternative for transformer architectures has emerged in the form of linear-time state space models (SSMs), which have demonstrated promising results \cite{gu2022, gu2021combining}. Particularly, the recently proposed Mamba architecture outperformed similar sized transformers for numerous benchmark tasks, and promises strong performance on long sequences with large Long Range Dependencies (LRDs) \cite{gu2023mamba}. Due to Mamba's strong performance in modeling sequences with large Long Range Dependencies (LRDs), we believe that a RALM utilizing the Mamba architecure may outperform a similarly-sized transformer-based RALM on various QA tasks. We aim to comprehensively evaluate and analyze both models on commonly used QA benchmarks.
+ 
 \subsection{Background}
+Language Models have recently gained significant attention due to their ability to function as Few-Shot Learners \cite{brown2020language}, achieving state of the art performance on a variety of NLP tasks without task-specific training. However, key limitations remain, such as their inability to update their knowledge base, their tendency to produce "hallucinations", or factually incorrect content, and their inability to provide reasoning for their answers \cite{lewis2021retrievalaugmented, huang2023survey}. 
+
+As a result, RALMs emerged as a effective solution to address these drawbacks by providing an external non-parametric knowledge base in the form of a vector index, from which a the model can retrieve relevant knowledge context that can then be appended to the initial prompt \cite{lewis2021retrievalaugmented}.
+
+However, recent research has shown that transformer-based RALMs struggle when presented with high amounts of retrieved knowledge content. The limited context window imposed by the quadratic memory constraints of self-attention create challenges in providing sufficient context, prompting research into information condensation techniques such as PRCA \cite{yang-etal-2023-prca}, RECOMP, \cite{xu2023recomp}, and Filter-Reranker \cite {ma2023large}. In addition, when context windows are expanded in larger models, research suggests that transformer language models struggle to effectively utilize all relevant content chunks \cite{xu2024retrieval, liu2023lost}. 
+
+To address these challenges, researchers developed the Linear State Space Layer (LSSL), a model that combines linear recurrence with a continuous-time state space \cite{gu2021combining}. Computational efficiency improvements in LSSLs subsequently resulted in Structured State Space Models, commonly referred to as S4 \cite{gu2022}. These models saw great performance improvements over previous state-of-the-art, yet still struggled to match the performance of Transformers on language tasks \cite{gu2023mamba}.
+
+As a result, the Mamba architecture was proposed, which added a selectivity mechanism to S4 models. The unique design of the model allows it to become context-aware by selectively consider specific inputs in the sequence while maintaining fast computation and efficient memory usage. As a result, the model achieved state-of-the-art performance on sequences up to 1M tokens, and 5 times faster inference than similarly sized transformers \cite{gu2023mamba}. 
 
 \subsection{Motivation}
-
-\subsection{Problem Definition}
+We believe that RALMs built on the recently proposed Mamba architecture, which uses Selective State Space Models, have the potential to outperform state-of-the-art RALMs that use Transformers for knowledge intensive tasks (namely, QA benchmarks) due to the performance results for long sequences as shown in \cite{gu2023mamba, gu2022}. This can potentially improve various RAG based applications centered around knowledge intensive tasks (such as QA) in various fields including domain specific research, finance, law, academia, and more.
+    
+\subsection{The Problem}
+Effectively processing and modeling large sequences of data, particularly in language, is a very difficult task. In knowledge intensive tasks, it is especially important and useful for the model to be able to effectively process large chunks of input data, such as for question answering tasks when using a RALM. Transformers show promising results, however, they struggle to effectively process very long sequences of input and end up forgetting much of the data in between the endpoints \cite{tay2020long}. Mamba \cite{gu2023mamba} has demonstrated promising results that indicate it may perform better in this space. We aim to explore this new foundation architecture as a foundational model in RALMs, comparing it to transformer-based RALMs, primarily for when the amount of retrieved context is very large.
 
 \section{Proposed Method}
+To test our hypothesis, we aim to develop two RALMs based on existing similarly-sized pre-trained models: one being a transformer architecture and the other being a Mamba model. We will utilize the same retriever architecture for both models, and keep constant across both models any hyperparameters relevant to the RAG system but external to the language model. We will then evaluate both models over commonly-utilized QA benchmark datasets, such as the Natural Questions dataset \cite{kwiatkowski-etal-2019-natural} and the TriviaQA dataset \cite{Joshi2017TriviaQAAL}. Specifically, we want to see how the models perform when the amount of retrieved content is large (K is large in Top-K Nearest Neighbor Search). For evaluation metrics we will utilize exact match (EM) and F1 over words in the answer(s) (same evaluation as shown in the TriviaQA paper) and we will potentially explore other metrics such as BLEU scores. In pursuit of this goal, we will utilize the PyTorch deep learning platform, LangChain for building a retrieval framework, and pre-trained models from HuggingFace. We hope that our project will provide a benchmark comparison between foundation models for RALMs, providing new insights into these models, their strengths for various tasks, and opening up future work in using different foundation models for RALMs and LMs in general.
 
 \section{Potential Results}
+There are generally three possible results. 1) The selective state space models significantly outperform the attention based architectures involving large retrieved context, 2) There is no significant difference in performance for large retrieved context, or 3) the attention based models significantly outperform the selective state space models involving large retrieved context. We also aim to explore how performance varies with differing lengths of retrieved context.
 
 \section{Feasibility}
+There are many resources for augmenting transformers with existing retrievers. Although augmenting Mamba with retriever capabilities is fairly novel, this augmentation is agnostic to the LM used since it simply concatenates retrieved data to the query. Therefore, this extension of RALMs from Transformers to Mamba is in theory a simple generalization of current methods. Additionally, there exist many pre-trained transformers and Mamba models of various sizes. Huggingface in particularly has vast selections of pre-trained LMs, including Mamba, that we can use to avoid pre-training ourselves. Finally, the benchmark datasets we will be using will be well-established for verifying the knowledge capabilities of RALMs. 
+
+The most difficult portion of the project will be creating a data processing pipeline for multiple QA datasets that includes an effective retriever. In addition, effectively analyzing the results will require a deep understanding of the architectures and mechanisms comprising both foundation models. Lastly, we must also ensure that the pre-trained foundation models are trained in such a way that making these comparisons is fair. We have access to a Georgia Tech Machine Learning Ph.D. candidate that is currently mentoring two of the group mentors for a separate RAG related research project that can help assist and mentor for RAG specific obstacles. Additionally, there is a plethora of resources and documentation online we plan to use to overcome these challenges.
+
+Overall, our project expands on existing methods in RALMs to form a comparison of two foundation models for language modeling and only requires moderate compute power at most and a simple logical augmentation to well-established methods.
 
 % Entries for the entire Anthology, followed by custom entries
 \bibliography{ref_proposal}
 \bibliographystyle{acl_natbib}
 
-This is a section in the appendix.
+%\section*{Appendix}
+
+%This is a section in the appendix.
 
 \end{document}
