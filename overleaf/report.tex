@@ -1,0 +1,106 @@
+\pdfoutput=1
+
+\documentclass[11pt]{article}
+
+% Remove the "review" option to generate the final version.
+\usepackage[final]{ACL2023}
+
+% Standard package includes
+\usepackage{times}
+\usepackage{latexsym}
+
+% For proper rendering and hyphenation of words containing Latin characters (including in bib files)
+\usepackage[T1]{fontenc}
+
+% This assumes your files are encoded as UTF8
+\usepackage[utf8]{inputenc}
+
+% This is not strictly necessary, and may be commented out.
+% However, it will improve the layout of the manuscript,
+% and will typically save some space.
+\usepackage{microtype}
+
+% This is also not strictly necessary, and may be commented out.
+% However, it will improve the aesthetics of text in
+% the typewriter font.
+\usepackage{inconsolata}
+
+% useful for filling with text
+\usepackage{lipsum}
+%\setcitestyle{numbers}
+
+% title should maybe be shortened but its good for now.
+% Analyzing RALMs with Selective State Space and Attention based Models for Long Sequence
+\title{Analyzing RALMs with Selective State Space and Attention based Architectures for Long Sequence Modeling}
+
+\author{Sebastian P. Jaskowski$^1$ \and Nolan M. Bridges$^1$ \and Austin T. Barton$^1$ \\
+        \\
+         $^1$Georgia Institute of Technology \\ 
+         \\ 
+         \texttt{sjaskowski3@gatech.edu} \\ \texttt{bridges@gatech.edu} \\
+         \texttt{abarton40@gatech.edu} \\}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+Retrieval-Augmented Language Models (RALMs) have achieved great success in question answering (QA) tasks, achieving state-of-the-art performance on many standard QA benchmarks. \cite{lewis2021retrievalaugmented, gao2024retrievalaugmented}. These models improve upon stand-alone language models by addressing limitations such as outdated knowledge, the generation of false or incorrect statements, and the lack of supportive reasoning for responses. 
+
+Most state-of-the-art RALMs are built on top of the transformer architecture \cite{vaswani2023attention}. While this architecture has allowed for incredibly powerful language models due to its ability to selectively learn relationships between arbitrary elements in sequential data, it has also presented key challenges for RALM models. Notably, it features quadratic scaling over sequence length, resulting in limited context windows \cite{xu2024retrieval}, and it also struggles to effectively consider all information in its context window. \cite{liu2023lost}.
+
+Recently, a possible alternative for transformer architectures has emerged in the form of linear-time state space models (SSMs), which have demonstrated promising results \cite{gu2022, gu2021combining}. Particularly, the recently proposed Mamba architecture outperformed similarly sized transformers for numerous benchmark tasks, and promises strong performance on long sequences with large Long Range Dependencies (LRDs) \cite{gu2023mamba}. Due to Mamba's strong performance in modeling sequences with large Long Range Dependencies (LRDs), we believe that a RALM utilizing the Mamba architecure may outperform a similarly-sized transformer-based RALM on various QA tasks. We aim to comprehensively evaluate and analyze both models on commonly used QA benchmarks.
+ 
+\subsection{Background}
+Language Models have recently gained significant attention due to their ability to function as Few-Shot Learners \cite{brown2020language}, achieving state of the art performance on a variety of NLP tasks without task-specific training. However, key limitations remain, such as their inability to update their knowledge base, their tendency to produce "hallucinations", or factually incorrect content, and their inability to provide reasoning for their answers \cite{lewis2021retrievalaugmented, huang2023survey}. 
+
+As a result, RALMs emerged as a effective solution to address these drawbacks by providing an external non-parametric knowledge base in the form of a vector index, from which a the model can retrieve relevant knowledge context that can then be appended to the initial prompt \cite{lewis2021retrievalaugmented}.
+
+However, recent research has shown that transformer-based RALMs struggle when presented with high amounts of retrieved knowledge content. The limited context window imposed by the quadratic memory constraints of self-attention create challenges in providing sufficient context, prompting research into information condensation techniques such as PRCA \cite{yang-etal-2023-prca}, RECOMP, \cite{xu2023recomp}, and Filter-Reranker \cite {ma2023large}. In addition, when context windows are expanded in larger models, research suggests that transformer language models struggle to effectively utilize all relevant content chunks \cite{xu2024retrieval, liu2023lost}. 
+
+To address these challenges, researchers developed the Linear State Space Layer (LSSL), a model that combines linear recurrence with a continuous-time state space \cite{gu2021combining}. Computational efficiency improvements in LSSLs subsequently resulted in Structured State Space Models, commonly referred to as S4 \cite{gu2022}. These models saw great performance improvements over previous state-of-the-art, yet still struggled to match the performance and efficiency of Transformers on language tasks \cite{gu2023mamba}.
+
+As a result, the Mamba architecture was proposed, which added a selectivity mechanism to S4 models. The design of the model allows it to become context-aware by selectively considering specific inputs in the sequence while maintaining fast computation and efficient memory usage. As a result, the model achieved state-of-the-art performance on sequences up to 1M tokens, and 5 times faster inference than similarly sized transformers \cite{gu2023mamba}.
+
+\section{Methods}
+\subsection{Retriever}
+Retrieval Augmented Generation (RAG) utilizes Dense Passage Retrievers (DPR) equipped with similarity search methods, such as the Facebook AI Similarity Search (FAISS), in order to include additional relevant context to a query to aid in knowledge intensive tasks. DPRs use various methods to embed tokens as vectors. Encoders such as BERT have shown to be highly effective in being able to transform tokens into vectors that have meaningful representations and structure to be used for downstream tasks.
+
+\subsection{State Space Model: Mamba}
+
+\subsection{Transformer: Dolly Transformer}
+
+\subsection{SOTA Language Model: LLaMa}
+% Specific models (Mamba, LLaMa, architectures, Dolly) and how
+% they were trained. Mention that our retriever did not have any documents that did not have at least one corresponding question (though perhaps they had some chunks that did not correspond to any question)
+
+\section{Dataset}
+QA is a fundamental task in NLP
+
+\section{Evaluation}
+For evaluation of our model on the TriviaQA dataset, we used the official standardized metrics chosen by the TriviaQA dataset creators \cite{trivia_qa_2017}. Specifically, these are exact match percentage and F1-scoring. Exact match percentage corresponds to the percentage of questions across the dataset where the RALM output string contains a substring that is a character-for-character, non-case-sensitive match with at least one of the ground truths provided by the dataset. F1-scoring is defined in the context of the TriviaQA dataset for a single question as the maximum harmonic mean of precision and recall across all possible ground truths, where precision is the number of matching words divided by the number of predicted words, and recall is the number of matching words divided by the number of ground truth words \cite{Beck_Reed_2020}. Evaluating these metrics on the TriviaQA dataset for MambaRALM, DollyRALM, and LLaMaRALM provides us with quantitative performance measures for the respective models on QA tasks.
+% Exact match, F1 scoring, contains match, etc. (3 citations about why these things work)
+
+\begin{table}
+    \centering
+    \begin{tabular}{cccc}
+        a & b & c & d \\
+        a & b & c & d\\
+        a & b & c & d\\
+    \end{tabular}
+    \caption{Caption}
+    \label{tab:my_label}
+\end{table}
+
+\section{Results}
+\lipsum[1]
+% Tables
+
+% Entries for the entire Anthology, followed by custom entries
+\bibliography{ref_report}
+\bibliographystyle{acl_natbib}
+
+%\section*{Appendix}
+
+%This is a section in the appendix.
+
+\end{document}
