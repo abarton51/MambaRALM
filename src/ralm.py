@@ -10,34 +10,29 @@ class RALM:
 
         self.vector_db = vector_db
         self.provide_no_context = False
-
         self._no_context_string = "There is no context."
     
     def retrieve_context(self, question : str, k : int) -> list[str]:
         '''Retrieve the top-k most relevant context to the prompt'''
-
         if self.provide_no_context is False: # Remove after we have context vectors
-
             relevant_context_chunks = self.vector_db.similarity_search(question, k)
-
             return [context_chunk.page_content for context_chunk in relevant_context_chunks]
-
         else:
-
             return [self._no_context_string]
         
     def generate_prompt(self, question : str, k : int = 4) -> str:
         '''Generates an LLM prompt (context, question, specifications), provided the question, utilizing k context chunks'''
-        
         context = " , ".join(self.retrieve_context(question, k))
-
         messages = []
-
+        
+        # prompt src: Medium article (https://medium.com/ai-insights-cobet/implementing-rag-with-mamba-and-the-qdrant-database-a-detailed-exploration-with-code-3e9a12b610f3)
         if context:
             messages.append({"role": "system", "content": "Please respond to the original query. If the selected document prompt is relevant and informative, provide a detailed answer based on its content. However, if the selected prompt does not offer useful information or is not applicable, simply state 'No answer found'."})
 
         messages.append(
-            {"role": "user", "content": """Original Prompt: {question}\n\n
+            {
+                "role": "user",
+                "content": """Original Prompt: {question}\n\n
                     Selected Prompt: {context}\n\n
                     respond: """.format(question=question, context=context)}
         )
