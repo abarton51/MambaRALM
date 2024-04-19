@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#Taken from official TriviaQA repository: https://github.com/mandarjoshi90/triviaqa/blob/master/evaluation/triviaqa_evaluation.py
 """ Official evaluation script for v1.0 of the TriviaQA dataset.
 Extended from the evaluation script for v1.1 of the SQuAD dataset. """
 from __future__ import print_function
