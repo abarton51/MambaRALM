@@ -6,9 +6,6 @@ from src.config import device
 from typing import Any
 import torch
 
-#Code Implementing Mamba RALM model adopted from 
-# Implementing RAG with Mamba and the Qdrant Database: A Detailed Exploration (with Code)
-# https://medium.com/ai-insights-cobet/implementing-rag-with-mamba-and-the-qdrant-database-a-detailed-exploration-with-code-3e9a12b610f3
 
 class MambaRALM(RALM):
     '''RALM class dedicated to wrapping a Mamba architecture for RAG tasks'''
