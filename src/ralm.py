@@ -7,7 +7,6 @@ class RALM:
     '''Generic class wrapping retrieval augmented langauge models'''
 
     def __init__(self, vector_db : VectorStore):
-
         self.vector_db = vector_db
         self.provide_no_context = False
         self._no_context_string = "There is no context."

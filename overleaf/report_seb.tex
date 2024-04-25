@@ -99,7 +99,7 @@ Upon completion of indexing, the original 10,031 wikipedia articles resulted in 
 \subsection{Retriever}
 To perform retrieval, we utilized the FAISS library to perform efficient k-Nearest Neighbors search based on cosine similarity over our vector database. We chose to utilize the FAISS library due to its efficient utilization of GPUs when performing similarity search, which significantly sped up RALM inference \cite{johnson2017billionscale}.
 \subsection{Prompt Formatting}
-To ensure maximum fairness in evaluation, we standardized our prompt across all models evaluated. Our prompt was constructed based on careful review of previously used system prompts for Retrieval-Augmented Language Models.
+To ensure maximum fairness in evaluation, we standardized our prompt across all models evaluated. Our prompt was constructed based on careful review of previously used system prompts for Retrieval-Augmented Language Models \cite{ralm_prompt}.
 \newline
 \newline
 Our prompt is displayed below.
@@ -127,7 +127,7 @@ We evaluate two language models within our Retrieval-Augmented Generation struct
     \label{tab:my_label}
 \end{table}
 
-We chose the Mamba-Chat model as it was one of few existing instruction-tuned language models based on the Mamba architecture. We then chose Dolly-v2-3b as our baseline transformer model due to its relatively-decent success, and comparable model size to Mamba-Chat. 
+We chose the Mamba-Chat model \cite{haven2023mambachat} as it was one of few existing instruction-tuned language models based on the Mamba architecture. We then chose Dolly-v2-3b \cite{DatabricksBlog2023DollyV2} as our baseline transformer model due to its relatively-decent success, and comparable model size to Mamba-Chat. 
 \subsection{Inference and Evaluation Methodology}
 In order to assess the ability of our RALMs, we evaluate the models over a subset of the popular Question-Answering (QA) benchmark TriviaQA \cite{Joshi2017TriviaQAAL}. This dataset features a set of questions, with each question matched to a particular noun answer, as well as a list of possible aliases for that answer.
 
@@ -191,6 +191,7 @@ While we aimed to provide a full comprehensive evaluation of differences between
     \item \textbf{Small Number of Evaluated Models.} Due to computational challenges and time constraints, we were only able to compare the Mamba-based RALM to one Transformer-based RALM. There is significant room for future work in comparing the Mamba RALM model to other transformer models, including even models with larger numbers of parameters such 7B parameter models and 13B parameter models, as well as models with larger context length limitations, allowing for evaluation on higher values of $k$.
     \item \textbf{Limited Evaluation Dataset.} Once again due to computational resource constraints, we were only able to benchmark the models on a small subset of the TriviaQA dataset. In future work, we would be interested in performing a more comprehensive evaluation against the entire dataset, as well as expanding the evaluation to other prominent QA benchmarks such as Natural Questions QA \cite{kwiatkowski-etal-2019-natural}.
     \item \textbf{Small Encoding Model} While the embedding model we chose, \textit{bge-small-en-v1.5}, is a high performant model given its size, there are higher performing embedding models available. Unfortunately, we were unable to utilize them due to computational constraints, as larger models would have required more memory usage and embedding time.
+    \item \textbf{Truncated Model Parameters} Due to computational limitations with regards to GPU memory, we were not able to use the models' parameters as they were trained, using 16-bit float parameters instead of the default 32 bits. This may have induced slight errors on larger sequences, but we believe that this effect was likely negligible.
 \end{enumerate}
 In summary, future work in this direction could focus on expanding our evaluation to more transformer-based models, as well as expanding the evaluation to new QA datasets. In particular, future work that attempts to expand our evaluations to larger transformer models with longer context lengths may significantly strengthen the significance of our results.
 \clearpage
@@ -212,7 +213,7 @@ The following table summarizes the specific contributions to the project by indi
      Task & Sebastian Jaskowski & Nolan Bridges & Austin Barton \\
      \hline
      \hline
-     Proposal Writing  &25\% & 5\% & 70\% \\
+     Proposal Writing  &25\% & 10\% & 65\% \\
      \hline
      Model Code & 10\% & 70\% & 20\% \\
      \hline
@@ -222,11 +223,11 @@ The following table summarizes the specific contributions to the project by indi
      \hline
      Evidence Embedding/Vector Index Construction & 60\% & 20\% & 20\%\\
      \hline
-     Model Evaluation & 50\% & 10\% & 40\%\\
+     Model Evaluation & 45\% & 10\% & 45\%\\
      \hline
      Final Report Writing & 70\% & 10\% & 20\% \\
      \hline
-     Presentation Slides & -- & -- & --\\
+     Presentation Slides & 10\% & 20\% & 70\%\\
      \hline
     \end{tabular}
 \end{table}
