@@ -1,4 +1,6 @@
-# MambaRALM
+<h1 align="center">MambaRALM: Analyzing RALMs with Selective State Space and Transformer Based Architectures for Long Sequence Modeling</h1>
+
+![](https://github.com/abarton51/BINNs_EQL_Covasim/blob/main/mambaralm.png?raw=true)
 
 The MambaRALM project aims to construct an evaluate a  Retrieval Augmented Generation (RAG) QA language model based on an instruction-tuned language model based on the [Mamba architecture](https://arxiv.org/abs/2312.00752). In our case, we our using the 2.8B parameter instruction-tuned [Mamba-Chat model](https://huggingface.co/havenhq/mamba-chat). 
 
