@@ -10,4 +10,4 @@
 
 The MambaRALM project aims to construct an evaluate a  Retrieval Augmented Generation (RAG) QA language model based on an instruction-tuned language model based on the [Mamba architecture](https://arxiv.org/abs/2312.00752). In our case, we our using the 2.8B parameter instruction-tuned [Mamba-Chat model](https://huggingface.co/havenhq/mamba-chat). 
 
-Comparisons of performance were done between a Mamba-based RALM ([mamba-chat]([https:huggingface.com](https://huggingface.co/havenhq/mamba-chat)) to a Transformer-based RALM ([Dolly-v2-3B](https://huggingface.co/databricks/dolly-v2-3b) by Databricks). The models were be evaluated over a subset of the TriviaQA QA dataset.
+Comparisons of performance were done between a Mamba-based RALM ([mamba-chat](https://huggingface.co/havenhq/mamba-chat)) to a Transformer-based RALM ([Dolly-v2-3B](https://huggingface.co/databricks/dolly-v2-3b) by Databricks). The models were be evaluated over a subset of the TriviaQA QA dataset.
