@@ -1,6 +1,6 @@
 <h1 align="center">MambaRALM: Analyzing RALMs with Selective State Space and Transformer Based Architectures for Long Sequence Modeling</h1>
 
-| ![](https://github.com/abarton51/MambaRALM/blob/main/mamba_ralm_fig.png?raw=true) |
+| ![](https://github.com/abarton51/MambaRALM/blob/main/mamba_v_transformer_ralms_fig.png?raw=true) |
 |:--:|
 | *Left: RAG Pipeline. Right: RALM Analysis Pipeline.* |
 
